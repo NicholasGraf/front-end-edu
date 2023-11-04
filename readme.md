@@ -21,7 +21,7 @@ Running this command in the CLI in this root folder of this project will load th
 node server.js
 ```
 
-## Frameworkless Develomment Reference Links
+## Frameworkless Development Reference Links
 
 https://www.frameworklessmovement.org
 
