@@ -1,4 +1,4 @@
-/*  ----- A Basic SPA Node Server for Local Development
+/*  ----- An SPA Node Server for Local Development
     This server simulates a real web server like Apache or NGINX.
     It routes all 404 traffic to the root folder index.html page creating an SPA environment that allows us to control routing on the client side.
     Included is GZIP compression and allowance control for file types listed in the mimeType array.

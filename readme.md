@@ -1,19 +1,19 @@
 # Frameworkless Web Application Tutorial
 
-This repository contains a starting point for a simple and sustainable frameworkless front-end SPA solution that we will develop together.
+This repository contains a starting point for a simple frameworkless front-end SPA solution that we will develop together.
 
 The codebase includes:
 
 - A node server
 - An index HTML page for application entry
 - A CSS file for styles
-- A Modular JavasScript entry file that will power our frameworkless applicaion
+- A Modular JavaScript entry file that will power our Frameworkless Application
 
 ## Run
 
 A basic Node.js server for local development is included but not necessary.
 
-You can simply open the application in any browser - but this node server simulates a real SPA web server for local development.
+You can simply open the application in any browser - but this node server simulates a real web server customized for an SPA.
 
 Running this command in the CLI in this root folder of this project will load the web application in a browser for you at port 8000.
 
