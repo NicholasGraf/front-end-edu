@@ -1,0 +1,51 @@
+<h1>Welcome Uli!</h1>
+
+<hr />
+<h2>Application Core Modules</h2>
+<p>
+  We now have some core modules that allow us to start build a Single Page Application:<br />
+  <b>~/app/assets/js/core/</b>
+</p>
+<ul>
+  <li>Router</li>
+  <li>Events Module</li>
+  <li>Components Module</li>
+</ul>
+
+<hr />
+<h2>Web Components</h2>
+<p>
+  I have started out SPA with some basic Web Components:<br />
+  <b>~/app/assets/js/components/</b>
+</p>
+<ul>
+  <li>App (Application wrapper)</li>
+  <li>PageContainer (Page content wrapper)</li>
+  <li>Navigation & NavItem (For changing views)</li>
+  <li>BaseElement (A root class for other web components)</li>
+  <li>BasePage (A root class for page specific JavaScript)</li>
+</ul>
+
+<hr />
+<h2>Application Configuration</h2>
+<p>
+  I have saved some of our application settings in a configuration file:<br />
+  <b>~/app/config.js</b>:
+</p>
+<ul>
+  <li>Application Name</li>
+  <li>Root Selector</li>
+  <li>Page Selector</li>
+  <li>Routes</li>
+  <li>Event Name Strings</li>
+</ul>
+
+<hr />
+<h2>Application Global Object</h2>
+<p>You also should note that we create an <b>Application Global Object</b> (~/app/assets/js/index.js).</p>
+
+<p>It is initiated here: <b>~/app/assets/js/core/init.js</b></p>
+<p>This allows us to track the state of the application as well as inject dependecies that can be used globally.</p>
+
+<hr />
+<p>As usual, feel free to customize and play with this codebase as we step through the develoment process.</p>

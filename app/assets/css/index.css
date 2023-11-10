@@ -4,7 +4,7 @@ body {
   font-size: 16px;
   margin: 0;
   padding: 0;
-  background: #aaa;
+  background: #eee;
 }
 
 h1 {
@@ -14,11 +14,43 @@ h1 {
 /* ----- Styles for the Custom Component Tag <app-root></app-root> ----- */
 
 app-root {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  overflow-x: auto;
   position: relative;
-  max-width: 700px;
-  margin: 1rem;
+}
+
+.header {
+  display: flex;
+  background: #bbb;
+  align-items: center;
+}
+
+.logo {
+  font-size: 2rem;
+  padding: 0 1rem;
+  user-select: none;
+}
+
+nav-container {
+  display: flex;
+}
+
+nav-item {
+  display: inline-block;
+  cursor: pointer;
+  user-select: none;
   padding: 1rem;
-  background: #eee;
-  border-radius: 1rem;
+}
+
+nav-item.current {
+  background: #222;
+  color: #fff;
+}
+
+page-container {
+  padding: 1rem;
 }
