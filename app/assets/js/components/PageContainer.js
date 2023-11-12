@@ -12,15 +12,17 @@ export class PageContainer extends BaseElement {
   disconnectedCallback() {
     app.events.unsubscribe(app.config.events.pageLoaded, this);
   }
-  render(html) {
-    if (!html) {
-      return;
-    }
-    this.innerHTML = html;
+  render() {
+    this.innerHTML = "Loading...";
   }
   update(route) {
     this.id = route.name;
     this.currentPath = route.path;
-    this.render(route.htmlContent);
+    if (route.htmlContent) {
+      this.innerHTML = route.htmlContent;
+    }
+    if (route.css) {
+      this.insertAdjacentHTML("afterbegin", `<link rel="stylesheet" href="${route.css}" media="all" />`);
+    }
   }
 }

@@ -18,6 +18,6 @@ let appObject = {
   events: new Events(),
   components: new Components(),
 };
-appObject.router = new Router(appObject);
+appObject.router = new Router(appObject.config, appObject.events);
 
 init(appObject);

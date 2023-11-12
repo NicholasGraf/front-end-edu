@@ -1,9 +1,13 @@
 export class Router {
-  constructor(app) {
-    if (!app) {
-      throw "Router needs the app object to initiate.";
+  constructor(config, events) {
+    if (!config) {
+      console.error("Router needs the app config object to initiate.");
     }
-    this.app = app;
+    if (!events) {
+      console.error("Router needs the events module to initiate.");
+    }
+    this.config = config;
+    this.events = events;
     this.routes = new Map();
     this.currentPath = null;
     this.previousPath = null;
@@ -11,21 +15,20 @@ export class Router {
     this.init();
   }
   init() {
-    let routeArray = Object.values(this.app.config.routes);
-    routeArray.forEach((route) => {
-      if (!route.active) {
+    for (const route in this.config.routes) {
+      let routeObject = this.config.routes[route];
+      if (!routeObject.active) {
         return;
       }
-      this.addRoute(route.path, {
-        name: route.display.toLowerCase(),
-        ...route,
-      });
-    });
+      this.addRoute(route, routeObject);
+    }
     window.addEventListener("popstate", (e) => this.loadPopState(e));
   }
 
-  addRoute(path, handler) {
-    this.routes.set(path, handler);
+  addRoute(path, route) {
+    route.path = path;
+    route.name = path == "/" ? "root" : route.path.replace("/", "");
+    this.routes.set(path, route);
   }
 
   async loadPopState(e) {
@@ -39,9 +42,7 @@ export class Router {
       return;
     }
     if (this.currentModule) {
-      let currentPathName = this.routes.get(this.currentPath).name,
-        loadedModule = this.currentModule[currentPathName];
-      this.app.events.unsubscribe(this.app.config.events.pageLoaded, loadedModule);
+      this.events.unsubscribe(this.events.pageLoaded, this.currentModule);
       this.currentModule = null;
     }
     window.history.pushState({ path: path }, path, path);
@@ -54,23 +55,23 @@ export class Router {
       console.error(`No route found for path: ${this.currentPath}`);
       return;
     }
-    const route = this.routes.get(this.currentPath),
-      htmlResponse = await fetch(`/${route.html}`);
-    if (!htmlResponse.ok) {
-      console.error(`Failed to load HTML for route: ${route.name}`);
-      return;
-    }
-    let html = await htmlResponse.text();
-    route.htmlContent = html;
-    document.title = `${this.app.config.appName} | ${route.display}`;
-    if (route.js) {
-      try {
-        this.currentModule = await import(`/${route.js}`);
-        this.app.events.subscribe(this.app.config.events.pageLoaded, this.currentModule[route.name]);
-      } catch {
-        this.currentModule = null;
+    const route = this.routes.get(this.currentPath);
+    if (route.html) {
+      const htmlResponse = await fetch(`/${route.html}`);
+      if (!htmlResponse.ok) {
+        console.error(`Failed to load HTML for route: ${route.name}`);
+        return;
       }
+      let html = await htmlResponse.text();
+      route.htmlContent = html;
     }
-    this.app.events.notify(this.app.config.events.pageLoaded, route);
+    if (route.js) {
+      this.currentModule = await import(`/${route.js}`);
+      this.events.subscribe(this.config.events.pageLoaded, this.currentModule[0]);
+    } else {
+      this.currentModule = null;
+    }
+    document.title = `${this.config.appName} | ${route.display}`;
+    this.events.notify(this.config.events.pageLoaded, route);
   }
 }
